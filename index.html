@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>EventEmitter</title>
+    </head>
+    <body>
+		<script src=".js" type="text/javascript"></script>
+		<script type="text/javascript">
+  	var emitter = new EventEmitter();
+
+  	console.group("one listener, called twice");
+  	{
+  		var count = 0;
+  		emitter
+  	        .addListener("event", function () {
+  	        	console.group("event emitted " + (++count) + " times");
+  	        	{
+  	        		console.log("this time with the arguments:", arguments);
+  	        	}
+  	        	console.groupEnd();
+  	        })
+  	    .emit("event", "value1")
+  	    .emit("event", "value2", true);
+  	}
+  	console.groupEnd();
+
+  	console.group("all listeners removed, one listener, called once");
+  	{
+  		emitter
+  			.removeAllListeners("event")
+  			.on("event", function () { console.log("just one listener"); })
+  			.emit("event");
+  	}
+  	console.groupEnd();
+
+		</script>
+    </body>
+</html>
